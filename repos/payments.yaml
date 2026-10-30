@@ -1,6 +1,8 @@
 team: team-payments
 lead: StefanPanait
 channel: "#payments-dev"
+sentinels: [StefanPanait]
+managers: [StefanPanait]
 repos:
   - name: payments-web
     description: Payments frontend

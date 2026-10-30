@@ -47,3 +47,39 @@ resource "github_team_repository" "access" {
   repository = github_repository.repo[each.value.repo].name
   permission = each.value.permission
 }
+
+locals {
+  # sentinels-<area> and managers-<area>, nested under the matching group.
+  roles = {
+    for r in flatten([
+      for t in local.team_files : [
+        for role in ["sentinels", "managers"] : {
+          name    = "${role}-${trimprefix(t.team, "team-")}"
+          group   = "group-${role}"
+          members = lookup(t, role, [])
+        }
+      ]
+    ]) : r.name => r
+  }
+
+  role_members = {
+    for m in flatten([for name, r in local.roles : [for u in r.members : { team = name, user = u }]]) :
+    "${m.team}:${m.user}" => m
+  }
+}
+
+resource "github_team" "role" {
+  for_each = local.roles
+
+  name           = each.key
+  parent_team_id = github_team.group[each.value.group].id
+  privacy        = "closed"
+}
+
+resource "github_team_membership" "role" {
+  for_each = local.role_members
+
+  team_id  = github_team.role[each.value.team].id
+  username = each.value.user
+  role     = "member"
+}
