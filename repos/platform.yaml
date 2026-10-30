@@ -12,3 +12,8 @@ repos:
     tier: critical
     shape: config
     status: active
+  - name: platform-gate
+    description: Posts merge checks and answers deploys as the platform App
+    tier: critical
+    shape: service
+    status: active

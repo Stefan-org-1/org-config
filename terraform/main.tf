@@ -7,7 +7,11 @@ locals {
   # Later maps win on the same key, so platform's maintain overrides push on its own repos.
   access = merge(
     { for name, r in local.repos : "${name}:${r.team}" => { repo = name, team = r.team, permission = "push" } },
-    { for name, r in local.repos : "${name}:group-sentinels" => { repo = name, team = "group-sentinels", permission = "push" } },
+    # Not on platform repos: write access there could read the gate App's key or move template tags.
+    {
+      for name, r in local.repos : "${name}:group-sentinels" => { repo = name, team = "group-sentinels", permission = "push" }
+      if r.team != "team-platform" || name == "org-config"
+    },
     # CODEOWNERS only counts teams with write access, and each team owns its file here.
     { for t in local.team_files : "org-config:${t.team}" => { repo = "org-config", team = t.team, permission = "push" } },
     { for name, r in local.repos : "${name}:team-platform" => { repo = name, team = "team-platform", permission = "maintain" } },
