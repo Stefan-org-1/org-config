@@ -1,0 +1,14 @@
+team: team-platform
+lead: StefanPanait
+channel: "#platform"
+repos:
+  - name: ci-templates
+    description: Reusable workflows called by every app repo
+    tier: critical
+    shape: library
+    status: active
+  - name: org-config
+    description: Manifest of approved repos
+    tier: critical
+    shape: config
+    status: active

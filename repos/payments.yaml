@@ -1,0 +1,9 @@
+team: team-payments
+lead: StefanPanait
+channel: "#payments-dev"
+repos:
+  - name: payments-web
+    description: Payments frontend
+    tier: internal
+    shape: frontend
+    status: active
