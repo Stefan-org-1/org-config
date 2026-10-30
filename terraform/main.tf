@@ -8,6 +8,8 @@ locals {
   access = merge(
     { for name, r in local.repos : "${name}:${r.team}" => { repo = name, team = r.team, permission = "push" } },
     { for name, r in local.repos : "${name}:group-sentinels" => { repo = name, team = "group-sentinels", permission = "push" } },
+    # CODEOWNERS only counts teams with write access, and each team owns its file here.
+    { for t in local.team_files : "org-config:${t.team}" => { repo = "org-config", team = t.team, permission = "push" } },
     { for name, r in local.repos : "${name}:team-platform" => { repo = name, team = "team-platform", permission = "maintain" } },
   )
 }
@@ -82,4 +84,9 @@ resource "github_team_membership" "role" {
   team_id  = github_team.role[each.value.team].id
   username = each.value.user
   role     = "member"
+
+  # GitHub makes org owners maintainers of every team they join.
+  lifecycle {
+    ignore_changes = [role]
+  }
 }
