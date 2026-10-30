@@ -1,0 +1,5 @@
+description: Anyone on the owning team approves the deploy.
+rules:
+  - approvals:
+      slots:
+        - ["team-{team}"]

@@ -1,0 +1,6 @@
+description: Workflow changes need a sentinel from any team.
+rules:
+  - approvals_if_changed:
+      paths: [.github/workflows/]
+      slots:
+        - [group-sentinels]

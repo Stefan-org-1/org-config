@@ -1,0 +1,4 @@
+description: Every other workflow run on the commit has passed.
+break_glass: true
+rules:
+  - pipeline_green

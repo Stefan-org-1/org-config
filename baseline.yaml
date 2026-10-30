@@ -1,0 +1,10 @@
+# Applied to every repo. Repos add rule sets on top; they cannot remove these.
+merge: [platform-integrity]
+deploy: [platform-integrity, central-deploy, green-pipeline, deploy-window]
+
+# Who can override rule sets marked break_glass: true, and for how long.
+break_glass:
+  slots:
+    - ["sentinels-{team}"]
+    - ["managers-{team}"]
+  ttl_hours: 24

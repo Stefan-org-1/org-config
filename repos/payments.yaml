@@ -7,3 +7,7 @@ repos:
     tier: internal
     shape: frontend
     status: active
+    rulesets:
+      merge: [workflow-sentinel]
+      deploy:
+        prod: [from-main, team-ships]
