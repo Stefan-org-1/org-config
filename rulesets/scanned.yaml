@@ -1,0 +1,7 @@
+description: The commit was scanned by the central build template, as shown by its signed result.
+rules:
+  - attested:
+      signer_workflow: Stefan-org-1/ci-templates/.github/workflows/node-build.yml
+      predicate_type: https://github.com/Stefan-org-1/ci-templates/scan/v1
+      require:
+        secret_scan: pass

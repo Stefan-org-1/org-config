@@ -10,6 +10,6 @@ repos:
     shape: frontend
     status: active
     rulesets:
-      merge: [workflow-sentinel]
+      merge: [workflow-sentinel, scanned]
       deploy:
-        prod: [from-main, team-ships]
+        prod: [from-main, team-ships, scanned]
