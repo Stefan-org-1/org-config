@@ -1,0 +1,3 @@
+# Third-party actions allowed in Stefan-org-1, beyond GitHub-owned ones and the org's own.
+# Every use must still be pinned to a full commit SHA.
+patterns: []
