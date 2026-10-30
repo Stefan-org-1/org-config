@@ -1,0 +1,6 @@
+# Cross-team groups. Members come from several product teams.
+groups:
+  - name: group-sentinels
+    description: Senior engineers trusted to approve across teams
+  - name: group-managers
+    description: Engineering managers
