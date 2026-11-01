@@ -6,7 +6,7 @@ sentinels: [StefanPanait]
 managers: [wendellliam]
 repos:
   - name: payments-web
-    description: Payments frontend
+    description: Payments frontend, checkout and card entry
     tier: internal
     shape: frontend
     status: active
