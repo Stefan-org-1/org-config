@@ -11,5 +11,5 @@ Sentinels are senior engineers trusted to approve across teams, so routine chang
 | Field | Values |
 |---|---|
 | `tier` | `critical`, `internal` |
-| `shape` | `service`, `frontend`, `vendor`, `library`, `config` |
+| `shape` | `service`, `frontend`, `vendor`, `library`, `config`, `docs` |
 | `status` | `active`, `archived` |

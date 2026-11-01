@@ -14,7 +14,7 @@ repos:
     status: active
     shared: true
   - name: change-requests
-    description: Deploy change requests, approved by PR review
+    description: "Deploy change requests: version, environments, window and approvers"
     tier: critical
     shape: config
     status: active
@@ -23,4 +23,9 @@ repos:
     description: Posts merge checks and answers deploys as the platform App
     tier: critical
     shape: service
+    status: active
+  - name: .github
+    description: Org front page and system overview
+    tier: internal
+    shape: docs
     status: active
