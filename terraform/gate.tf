@@ -54,3 +54,32 @@ resource "github_repository_environment" "env" {
   repository  = github_repository.repo[each.value.repo].name
   environment = each.value.env
 }
+
+# Release tags are immutable: once X.Y.Z exists, nobody but an org admin can move or delete it.
+# Creating one is open to anyone with write access; release.yml is the paved road.
+resource "github_repository_ruleset" "release_tags" {
+  for_each = local.active_repos
+
+  name        = "release-tags"
+  repository  = github_repository.repo[each.key].name
+  target      = "tag"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["refs/tags/*.*.*"]
+      exclude = []
+    }
+  }
+
+  bypass_actors {
+    actor_id    = 0
+    actor_type  = "OrganizationAdmin"
+    bypass_mode = "always"
+  }
+
+  rules {
+    update   = true
+    deletion = true
+  }
+}
