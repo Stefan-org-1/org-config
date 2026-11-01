@@ -37,7 +37,7 @@ rulesets:
 |---|---|---|
 | `platform-integrity` | hard | The repo is active in this manifest |
 | `central-deploy` | hard | The deploy uses `ci-templates` `deploy.yml` |
-| `scanned` | hard | `ci-templates` `scan.yml` signed a passing scan for the commit |
+| `scanned` | hard | `ci-templates` `scan.yml` signed a passing secret scan and SonarQube result for the commit |
 | `workflow-sentinel` | hard | A PR that changes `.github/workflows/` is approved by any sentinel |
 | `change-team` | hard | A change request covers the deploy, approved by anyone on the owning team |
 | `change-two-person` | hard | Same, approved by a sentinel and a different manager of the owning team |
