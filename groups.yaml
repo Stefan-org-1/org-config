@@ -1,6 +1,11 @@
 # Cross-team groups. Members come from several product teams.
+# Sentinel and manager groups get their members through team files (sentinels:, managers:).
+# Other groups list members here.
 groups:
   - name: group-sentinels
     description: Senior engineers trusted to approve across teams
   - name: group-managers
     description: Engineering managers
+  - name: group-org-approvers
+    description: Approve applies of org-terraform, which can change any repo, team or member
+    members: [StefanPanait]
