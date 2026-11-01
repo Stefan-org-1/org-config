@@ -28,8 +28,9 @@ The deploy gate checks PRs and deploys against rule sets in `rulesets/`. Each fi
 rulesets:
   merge: [workflow-sentinel, scanned]
   deploy:
-    staging: [from-main, scanned]
-    prod: [released, change-team, scanned]
+    test: [from-main, scanned]
+    staging: [released, scanned]
+    prod: [released, staged, change-team, scanned]
 ```
 
 Each key under `deploy` is an environment. Terraform creates it in the repo, so an app gets the environments it lists.
@@ -45,6 +46,7 @@ Each key under `deploy` is an environment. Terraform creates it in the repo, so 
 | `change-team` | hard | A change request covers the deploy, approved by anyone on the owning team |
 | `change-two-person` | hard | Same, approved by a sentinel and a different manager of the owning team |
 | `released` | hard | The commit has a release tag `X.Y.Z`, is on `main` or a `release/X.Y.z` branch, and passed the merge gate |
+| `staged` | soft | The commit was deployed to staging successfully before |
 | `from-main` | soft | The commit is on `main` and passed the merge gate |
 | `green-pipeline` | soft | Every other workflow run on the commit passed |
 | `deploy-window` | soft | Not Friday after 16:00 or the weekend, Toronto time |
@@ -53,4 +55,4 @@ Each key under `deploy` is an environment. Terraform creates it in the repo, so 
 
 ### Add or change a set
 
-A new set reuses existing rule types: `approvals`, `approvals_if_changed`, `change_approved`, `attested`, `central_template`, `from_branch`, `release_tag`, `check_passed`, `pipeline_green`, `deploy_window`, `manifest_active`. A new rule type is code in [platform-gate](https://github.com/Stefan-org-1/platform-gate/blob/main/gate/policy.py).
+A new set reuses existing rule types: `approvals`, `approvals_if_changed`, `change_approved`, `attested`, `central_template`, `from_branch`, `release_tag`, `deployed_to`, `check_passed`, `pipeline_green`, `deploy_window`, `manifest_active`. A new rule type is code in [platform-gate](https://github.com/Stefan-org-1/platform-gate/blob/main/gate/policy.py).

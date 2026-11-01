@@ -1,0 +1,5 @@
+description: The commit was deployed to staging successfully before, so prod gets what staging tested.
+break_glass: true
+rules:
+  - deployed_to:
+      environment: staging
