@@ -14,3 +14,5 @@ Sentinels are senior engineers trusted to approve across teams, so routine chang
 | `shape` | `service`, `frontend`, `vendor`, `library`, `config`, `docs` |
 | `status` | `active`, `archived` |
 | `rulesets` | Rule sets for merges and per environment. Each key under `rulesets.deploy` is an environment, created in the repo. The sets are defined in [org-policy](https://github.com/Stefan-org-1/org-policy#rule-sets) |
+| `shared` | `true` gives every team write access, for platform repos teams contribute to |
+| `code_owner_review` | `true` makes GitHub require a code owner's approval on PRs to the default branch |

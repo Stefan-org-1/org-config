@@ -12,17 +12,20 @@ repos:
     tier: critical
     shape: config
     status: active
+    code_owner_review: true
     shared: true
   - name: org-policy
     description: Rule sets, baseline and break-glass the deploy gate applies
     tier: critical
     shape: config
     status: active
+    code_owner_review: true
   - name: org-terraform
     description: Applies org-manifest and org-policy to GitHub
     tier: critical
     shape: service
     status: active
+    code_owner_review: true
   - name: change-requests
     description: "Deploy change requests: version, environments, window and approvers"
     tier: critical
