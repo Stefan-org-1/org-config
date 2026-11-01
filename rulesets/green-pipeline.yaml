@@ -1,4 +1,5 @@
-description: Every other workflow run on the commit has passed.
+description: Every CI run on the commit, started by a push or a PR, has passed. Release and deploy runs do not count.
 break_glass: true
 rules:
-  - pipeline_green
+  - pipeline_green:
+      events: [push, pull_request]

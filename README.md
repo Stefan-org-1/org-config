@@ -48,7 +48,7 @@ Each key under `deploy` is an environment. Terraform creates it in the repo, so 
 | `released` | hard | The commit has a release tag `X.Y.Z`, is on `main` or a `release/X.Y.z` branch, and passed the merge gate |
 | `staged` | soft | The commit was deployed to staging successfully before |
 | `from-main` | soft | The commit is on `main` and passed the merge gate |
-| `green-pipeline` | soft | Every other workflow run on the commit passed |
+| `green-pipeline` | soft | Every CI run on the commit (push or PR) passed. Release and deploy runs do not count |
 | `deploy-window` | soft | Not Friday after 16:00 or the weekend, Toronto time |
 
 `{team}` in a set means the repo's owning team, so one set serves every team.
