@@ -13,6 +13,7 @@ repos:
     shape: config
     status: active
     code_owner_review: true
+    required_checks: [validate]
     shared: true
   - name: org-policy
     description: Rule sets, baseline and break-glass the deploy gate applies

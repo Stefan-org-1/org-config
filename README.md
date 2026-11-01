@@ -16,3 +16,23 @@ Sentinels are senior engineers trusted to approve across teams, so routine chang
 | `rulesets` | Rule sets for merges and per environment. Each key under `rulesets.deploy` is an environment, created in the repo. The sets are defined in [org-policy](https://github.com/Stefan-org-1/org-policy#rule-sets) |
 | `shared` | `true` gives every team write access, for platform repos teams contribute to |
 | `code_owner_review` | `true` makes GitHub require a code owner's approval on PRs to the default branch |
+| `required_checks` | GitHub Actions checks that must pass before merging, such as `validate` |
+
+## Validation
+
+`validate.py` runs on every PR and must pass. It rejects:
+
+- A file defining a team other than its own name.
+- Sentinels or managers who are not members.
+- Unknown fields, so a typo is not silently ignored.
+- Values outside the allowed ones, and environment names that are not lowercase.
+- Rule sets that do not exist in org-policy.
+- A repo listed by two teams.
+- `shared`, `code_owner_review` or `required_checks` outside platform repos, since they widen access or change enforcement.
+- People who are not GitHub users.
+
+Moving a repo between teams changes both team files, so both teams' code owners must approve.
+
+```
+python validate.py . ../org-policy
+```
