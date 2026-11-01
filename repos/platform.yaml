@@ -12,6 +12,13 @@ repos:
     tier: critical
     shape: config
     status: active
+    shared: true
+  - name: change-requests
+    description: Deploy change requests, approved by PR review
+    tier: critical
+    shape: config
+    status: active
+    shared: true
   - name: platform-gate
     description: Posts merge checks and answers deploys as the platform App
     tier: critical

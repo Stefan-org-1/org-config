@@ -2,9 +2,9 @@
 merge: [platform-integrity]
 deploy: [platform-integrity, central-deploy, green-pipeline, deploy-window]
 
-# Who can override rule sets marked break_glass: true, and for how long.
+# Approvals an emergency change request needs to override rule sets marked break_glass: true.
+# How long it lasts is its window, at most 24 hours (checked in change-requests).
 break_glass:
   slots:
     - ["sentinels-{team}"]
     - ["managers-{team}"]
-  ttl_hours: 24

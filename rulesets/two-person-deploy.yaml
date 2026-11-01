@@ -1,6 +1,0 @@
-description: A sentinel and a manager of the owning team, two different people, approve the deploy.
-rules:
-  - approvals:
-      slots:
-        - ["sentinels-{team}"]
-        - ["managers-{team}"]

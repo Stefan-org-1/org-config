@@ -4,16 +4,24 @@ locals {
 
   repos = { for r in flatten([for t in local.team_files : [for r in t.repos : merge(r, { team = t.team })]]) : r.name => r }
 
+  # Platform repos every team writes to, such as org-config and change-requests.
+  shared_repos = [for name, r in local.repos : name if lookup(r, "shared", false)]
+
   # Later maps win on the same key, so platform's maintain overrides push on its own repos.
   access = merge(
     { for name, r in local.repos : "${name}:${r.team}" => { repo = name, team = r.team, permission = "push" } },
-    # Not on platform repos: write access there could read the gate App's key or move template tags.
+    # Not on other platform repos: write access there could read the gate App's key or move template tags.
     {
       for name, r in local.repos : "${name}:group-sentinels" => { repo = name, team = "group-sentinels", permission = "push" }
-      if r.team != "team-platform" || name == "org-config"
+      if r.team != "team-platform" || contains(local.shared_repos, name)
     },
-    # CODEOWNERS only counts teams with write access, and each team owns its file here.
-    { for t in local.team_files : "org-config:${t.team}" => { repo = "org-config", team = t.team, permission = "push" } },
+    # CODEOWNERS only counts teams with write access. Nested role teams inherit from their group.
+    merge([
+      for name in local.shared_repos : merge(
+        { for t in local.team_files : "${name}:${t.team}" => { repo = name, team = t.team, permission = "push" } },
+        { "${name}:group-managers" = { repo = name, team = "group-managers", permission = "push" } },
+      )
+    ]...),
     { for name, r in local.repos : "${name}:team-platform" => { repo = name, team = "team-platform", permission = "maintain" } },
   )
 }

@@ -1,0 +1,4 @@
+# Where the deploy gate looks for change requests. Only "git" exists: changes are files in
+# this repo, approved by PR review. A Jira or ServiceNow source would plug in here.
+source: git
+repo: change-requests
