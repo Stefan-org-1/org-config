@@ -1,0 +1,2 @@
+# Org owners. Managed by hand, never by Terraform, so a bad apply cannot lock everyone out.
+admins: [StefanPanait]

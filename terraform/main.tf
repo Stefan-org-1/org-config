@@ -89,6 +89,46 @@ resource "github_team_membership" "role" {
   username = each.value.user
   role     = "member"
 
+  depends_on = [github_membership.member]
+
+  # GitHub makes org owners maintainers of every team they join.
+  lifecycle {
+    ignore_changes = [role]
+  }
+}
+
+locals {
+  org_admins = yamldecode(file("${path.module}/../org.yaml")).admins
+
+  team_members = {
+    for m in flatten([for t in local.team_files : [for u in lookup(t, "members", []) : { team = t.team, user = u }]]) :
+    "${m.team}:${m.user}" => m
+  }
+
+  # Everyone named anywhere in the manifest, except owners.
+  org_members = toset([
+    for u in distinct(flatten([
+      for t in local.team_files : concat(lookup(t, "members", []), lookup(t, "sentinels", []), lookup(t, "managers", []))
+    ])) : u if !contains(local.org_admins, u)
+  ])
+}
+
+resource "github_membership" "member" {
+  for_each = local.org_members
+
+  username = each.key
+  role     = "member"
+}
+
+resource "github_team_membership" "team" {
+  for_each = local.team_members
+
+  team_id  = github_team.team[each.value.team].id
+  username = each.value.user
+  role     = "member"
+
+  depends_on = [github_membership.member]
+
   # GitHub makes org owners maintainers of every team they join.
   lifecycle {
     ignore_changes = [role]

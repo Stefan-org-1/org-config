@@ -29,7 +29,7 @@ resource "github_repository_ruleset" "baseline" {
 
   # Org admins can bypass: the merge-side break-glass for this lab.
   bypass_actors {
-    actor_id    = 1
+    actor_id    = 0
     actor_type  = "OrganizationAdmin"
     bypass_mode = "always"
   }
