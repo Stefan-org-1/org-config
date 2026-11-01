@@ -13,4 +13,5 @@ repos:
     rulesets:
       merge: [workflow-sentinel, scanned]
       deploy:
-        prod: [from-main, change-team, scanned]
+        staging: [from-main, scanned]
+        prod: [released, change-team, scanned]

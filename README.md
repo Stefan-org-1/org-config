@@ -18,7 +18,7 @@ Sentinels are senior engineers trusted to approve across teams, so routine chang
 
 The deploy gate checks PRs and deploys against rule sets in `rulesets/`. Each file is a named group of rules with parameters.
 
-- `baseline.yaml` lists the sets every repo gets, for merge and for deploy.
+- `baseline.yaml` lists the sets every repo gets: for merge, for deploys to any environment (`deploy.all`), and for deploys to a named environment, such as `deploy.prod`.
 - A repo's manifest entry adds its own under `rulesets.merge` and `rulesets.deploy.<environment>`.
 - All selected sets must pass.
 - Sets with `break_glass: true` are soft. An emergency change in `change-requests`, approved by the people `baseline.yaml` lists under `break_glass`, overrides them.
@@ -28,8 +28,11 @@ The deploy gate checks PRs and deploys against rule sets in `rulesets/`. Each fi
 rulesets:
   merge: [workflow-sentinel, scanned]
   deploy:
-    prod: [from-main, change-team, scanned]
+    staging: [from-main, scanned]
+    prod: [released, change-team, scanned]
 ```
+
+Each key under `deploy` is an environment. Terraform creates it in the repo, so an app gets the environments it lists.
 
 ### Available sets
 
@@ -41,6 +44,7 @@ rulesets:
 | `workflow-sentinel` | hard | A PR that changes `.github/workflows/` is approved by any sentinel |
 | `change-team` | hard | A change request covers the deploy, approved by anyone on the owning team |
 | `change-two-person` | hard | Same, approved by a sentinel and a different manager of the owning team |
+| `released` | hard | The commit has a release tag `X.Y.Z`, is on `main` or a `release/X.Y.z` branch, and passed the merge gate |
 | `from-main` | soft | The commit is on `main` and passed the merge gate |
 | `green-pipeline` | soft | Every other workflow run on the commit passed |
 | `deploy-window` | soft | Not Friday after 16:00 or the weekend, Toronto time |
@@ -49,4 +53,4 @@ rulesets:
 
 ### Add or change a set
 
-A new set reuses existing rule types: `approvals`, `approvals_if_changed`, `change_approved`, `attested`, `central_template`, `from_branch`, `check_passed`, `pipeline_green`, `deploy_window`, `manifest_active`. A new rule type is code in [platform-gate](https://github.com/Stefan-org-1/platform-gate/blob/main/gate/policy.py).
+A new set reuses existing rule types: `approvals`, `approvals_if_changed`, `change_approved`, `attested`, `central_template`, `from_branch`, `release_tag`, `check_passed`, `pipeline_green`, `deploy_window`, `manifest_active`. A new rule type is code in [platform-gate](https://github.com/Stefan-org-1/platform-gate/blob/main/gate/policy.py).
