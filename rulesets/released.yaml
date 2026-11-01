@@ -1,5 +1,0 @@
-description: The commit is a release, tagged X.Y.Z, on main or a release/X.Y.z branch, and passed the merge gate.
-rules:
-  - release_tag
-  - check_passed:
-      name: policy

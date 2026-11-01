@@ -1,4 +1,0 @@
-# Where the deploy gate looks for change requests. Only "file" exists: each change is a file in
-# this repo listing its approvers. A Jira or ServiceNow source would plug in here.
-source: file
-repo: change-requests

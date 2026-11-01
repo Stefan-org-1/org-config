@@ -1,5 +1,0 @@
-description: Every CI run on the commit, started by a push or a PR, has passed. Release and deploy runs do not count.
-break_glass: true
-rules:
-  - pipeline_green:
-      events: [push, pull_request]

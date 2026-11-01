@@ -1,9 +1,5 @@
-# Last match wins. Any one listed owner can approve.
-*                       @Stefan-org-1/team-platform @Stefan-org-1/group-sentinels
+# Last match wins. Any one listed owner can approve. A branch ruleset requires it.
+*                       @Stefan-org-1/team-platform
 
-# Team files: the team or a sentinel approves.
-# To also require platform, replace the line's owners with @Stefan-org-1/team-platform.
-/repos/payments.yaml    @Stefan-org-1/team-payments @Stefan-org-1/group-sentinels
-
-# Only platform changes who approves.
-/.github/CODEOWNERS     @Stefan-org-1/team-platform
+# Team files: the team's sentinels or managers approve.
+/repos/payments.yaml    @Stefan-org-1/sentinels-payments @Stefan-org-1/managers-payments

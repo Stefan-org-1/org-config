@@ -7,12 +7,22 @@ repos:
     tier: critical
     shape: library
     status: active
-  - name: org-config
-    description: Manifest of approved repos
+  - name: org-manifest
+    description: Approved repos, teams and members. Teams edit their own file
     tier: critical
     shape: config
     status: active
     shared: true
+  - name: org-policy
+    description: Rule sets, baseline and break-glass the deploy gate applies
+    tier: critical
+    shape: config
+    status: active
+  - name: org-terraform
+    description: Applies org-manifest and org-policy to GitHub
+    tier: critical
+    shape: service
+    status: active
   - name: change-requests
     description: "Deploy change requests: version, environments, window and approvers"
     tier: critical

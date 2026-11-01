@@ -1,5 +1,0 @@
-description: A change request covers the deploy, approved by anyone on the owning team.
-rules:
-  - change_approved:
-      slots:
-        - ["team-{team}"]

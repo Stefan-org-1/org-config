@@ -1,6 +1,0 @@
-description: A change request covers the deploy, approved by a sentinel and a manager of the owning team.
-rules:
-  - change_approved:
-      slots:
-        - ["sentinels-{team}"]
-        - ["managers-{team}"]

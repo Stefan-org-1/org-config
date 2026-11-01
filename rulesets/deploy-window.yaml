@@ -1,9 +1,0 @@
-description: No deploys late Friday or on weekends.
-break_glass: true
-rules:
-  - deploy_window:
-      timezone: America/Toronto
-      blocked:
-        - days: [fri]
-          after: "16:00"
-        - days: [sat, sun]

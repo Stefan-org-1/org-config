@@ -1,4 +1,0 @@
-description: Deploys go through the central deploy template.
-rules:
-  - central_template:
-      workflow: Stefan-org-1/ci-templates/.github/workflows/deploy.yml

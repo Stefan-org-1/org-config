@@ -1,7 +1,0 @@
-description: Deploy only commits on main that passed the merge gate.
-break_glass: true
-rules:
-  - from_branch:
-      branch: main
-  - check_passed:
-      name: policy
