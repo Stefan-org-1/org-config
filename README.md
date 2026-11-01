@@ -30,6 +30,7 @@ Sentinels are senior engineers trusted to approve across teams, so routine chang
 - A repo listed by two teams.
 - `shared`, `code_owner_review` or `required_checks` outside platform repos, since they widen access or change enforcement.
 - People who are not GitHub users.
+- Groups with unknown fields, names not starting with `group-`, or members listed for `group-sentinels` and `group-managers`, which get theirs from team files.
 
 Moving a repo between teams changes both team files, so both teams' code owners must approve.
 

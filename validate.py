@@ -14,6 +14,7 @@ import sys
 import yaml
 
 TEAM_FIELDS = {"team", "lead", "channel", "members", "sentinels", "managers", "repos"}
+GROUP_FIELDS = {"name", "description", "members"}
 REPO_FIELDS = {"name", "description", "tier", "shape", "status", "rulesets", "shared", "code_owner_review",
                "required_checks"}
 VALUES = {
@@ -55,6 +56,19 @@ def check_team(path: pathlib.Path, rule_sets: set[str]) -> list[str]:
     return errors
 
 
+def check_groups(path: pathlib.Path) -> list[str]:
+    errors = []
+    for g in yaml.safe_load(path.read_text()).get("groups", []):
+        where = f"group {g.get('name', '?')}"
+        errors += [f"{where}: unknown field {k}" for k in sorted(g.keys() - GROUP_FIELDS)]
+        errors += [f"{where}: missing {k}" for k in ("name", "description") if k not in g]
+        if not str(g.get("name", "")).startswith("group-"):
+            errors.append(f"{where}: name must start with group-")
+        if g.get("name") in ("group-sentinels", "group-managers") and g.get("members"):
+            errors.append(f"{where}: members come from team files (sentinels:, managers:), not here")
+    return errors
+
+
 def people(path: pathlib.Path) -> set[str]:
     t = yaml.safe_load(path.read_text())
     return {t.get("lead"), *t.get("members", [])} - {None}
@@ -68,7 +82,9 @@ def github_user_missing(login: str) -> bool:
 def main(manifest: str, policy: str) -> int:
     rule_sets = {p.stem for p in pathlib.Path(policy, "rulesets").glob("*.yaml")}
     files = sorted(pathlib.Path(manifest, "repos").glob("*.yaml"))
+    groups = pathlib.Path(manifest, "groups.yaml")
     problems = [(f, e) for f in files for e in check_team(f, rule_sets)]
+    problems += [(groups, e) for e in check_groups(groups)]
 
     owners = {}
     for f in files:
@@ -80,6 +96,8 @@ def main(manifest: str, policy: str) -> int:
     if os.environ.get("GH_TOKEN"):
         for f in files:
             problems += [(f, f"{login} is not a GitHub user") for login in sorted(people(f)) if github_user_missing(login)]
+        group_people = {u for g in yaml.safe_load(groups.read_text()).get("groups", []) for u in g.get("members", [])}
+        problems += [(groups, f"{login} is not a GitHub user") for login in sorted(group_people) if github_user_missing(login)]
 
     for f, e in problems:
         print(f"{f}: {e}")
