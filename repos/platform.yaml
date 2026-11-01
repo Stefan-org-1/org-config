@@ -21,6 +21,7 @@ repos:
     shape: config
     status: active
     code_owner_review: true
+    required_checks: [validate]
   - name: org-terraform
     description: Applies org-manifest and org-policy to GitHub
     tier: critical
