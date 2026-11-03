@@ -2,7 +2,7 @@ team: team-payments
 lead: StefanPanait
 channel: "#payments-dev"
 members: [StefanPanait, wendellliam]
-sentinels: [StefanPanait]
+sentinels: [StefanPanait, wendellliam]
 managers: [wendellliam]
 repos:
   - name: payments-web
